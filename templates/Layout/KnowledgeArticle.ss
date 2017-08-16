@@ -20,19 +20,6 @@
                 $Content
             </div>
         </article>
-        <aside class="knowledge-article__sidebar grid_3">
-            <% loop $Promos %>
-                <% if $Up.Promos.Count >= 3 %>
-                    <% include SidebarPromoModule ColWidth=is-one-third %>
-                <% else %>
-                    <% if $Up.Promos.Count == 2 %>
-                        <% include SidebarPromoModule ColWidth=is-half %>
-                    <% else %>
-                        <% include SidebarPromoModule %>
-                    <% end_if %>
-                <% end_if %>
-            <% end_loop %>
-        </aside>
     </div>
 </section>
 <% if $Related %>
