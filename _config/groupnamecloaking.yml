@@ -1,0 +1,10 @@
+---
+After: "framework/*","cms/*"
+---
+Cloaking:
+  'case study':
+    Singular: 'Case Study'
+    Plural: 'Case Studies'
+  'library':
+    Singular: 'Resource'
+    Plural: 'Resources'

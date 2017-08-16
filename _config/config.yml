@@ -1,0 +1,7 @@
+---
+Name: saltedknowledgehub
+After: 'framework/*','cms/*'
+---
+ContentController:
+  extensions:
+    - 'PageJSInjector'
