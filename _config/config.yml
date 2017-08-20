@@ -8,8 +8,8 @@ ContentController:
 
 DataList:
   extensions:
-    - DataListExt
+    - DataListJSONExtension
 
 ArrayList:
   extensions:
-    - DataListExt
+    - DataListJSONExtension
