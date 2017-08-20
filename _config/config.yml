@@ -5,3 +5,11 @@ After: 'framework/*','cms/*'
 ContentController:
   extensions:
     - 'PageJSInjector'
+
+DataList:
+  extensions:
+    - DataListExt
+
+ArrayList:
+  extensions:
+    - DataListExt
