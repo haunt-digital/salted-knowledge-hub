@@ -87,10 +87,11 @@ Knowledge Hub Landing Page
 There is a possible gotcha after a Knowledge Hub Group page is created:
 After the page is created, you won’t see the Child Page tab straightaway. You need to open up the right sidebar (assume it’s closed), and select the article types that you are going to allow in this particular group
 
-[image:05F2758C-47CE-48A3-BD2D-F2654FB1FB0F-35787-00023D6D68670E49/B8B2F591-4B9F-4DCC-AE43-7B94141097C9.png]
-
 Oh by the way, the right sidebar in Knowledge Hub Group Page editing interface is also where you define _how many items per page_
+
+![alt text][logo]
+[logo]: http://lol.saltydev.com/knowledge-hub-screengrab.png "screen grab"
 
 
 ### Frontend
-This module leaves the canvas open for your awesome painting to take place. If you find the default templates trip you, just feel free to override them
+This module leaves the canvas blank for your awesome painting to take place. If you find the default templates trip you, just feel free to override them
