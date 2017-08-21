@@ -31,6 +31,7 @@ Once the installation is done, do `dev/build?flush=all`  on the browser
 To give support to the frontend, you also need below JS libraries installed. Please add them into your bower’s `dependencies` block, and then run `bower update`
 
 ```
+"salted-js": "*",
 "handlebars": "^4.0.10",
 "fancySelect": "fancyselect#^1.1.0",
 "isotope": "^3.0.4",

@@ -1,32 +1,6 @@
 (function($) {
     $(document).ready(function(e)
     {
-        $('.knowledge-article__content iframe').each(function(i, el)
-        {
-            if ($(this).parent().hasClass('media')) {
-                $(this).parent().addClass('iframe');
-            }
-        });
-
-        var owlConfig   =   {
-                                loop: true,
-                                nav: true,
-                                smartSpeed: 1000,
-                                items: 1,
-                                autoplay: true,
-                                loop: true,
-                                autoPlay: true,
-                                lazyLoad: true,
-                                dots: false,
-                                navText: ["<i class='fa fa-angle-left'></i>","<i class='fa fa-angle-right'></i>"],
-                                autoplayTimeout: 5000,
-                                autoplayHoverPause: true,
-                            };
-        if ($('.knowledge-article__content .owl-carousel').length != 0) {
-            $('.knowledge-article__content .owl-carousel').owlCarousel(owlConfig);
-        }
-
-
         $('select.use-fancy').fancySelect().on('change.fs', function()
         {
             $(this).trigger('change.$');
@@ -98,25 +72,7 @@
         });
 
         if ($('#search-knowledge-hub').length == 1) {
-            $('#search-knowledge-hub input.text').blur(function(e)
-            {
-                var pressingButton = $('#search-knowledge-hub button:active').length;
-
-                if (!pressingButton) {
-                    $(this).removeClass('focused');
-                    $(this).val('');
-                }
-            }).keydown(function(e)
-            {
-                if (e.keyCode == 27) {
-                    if ($.trim($(this).val()).length > 0) {
-                        $(this).val('');
-                    } else {
-                        $(this).blur();
-                    }
-                }
-            });
-
+            
             $('#search-knowledge-hub').ajaxSubmit(
             {
                 validator:  function()
