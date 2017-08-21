@@ -1,6 +1,6 @@
 <?php
 
-class Resource extends KnowledgeArticle
+class ResourceKnowledgeArticle extends KnowledgeArticle
 {
     private static $has_one = array(
         'AttachedFile'      =>  'File'
@@ -22,7 +22,7 @@ class Resource extends KnowledgeArticle
     }
 }
 
-class Resource_Controller extends KnowledgeArticle_Controller
+class ResourceKnowledgeArticle_Controller extends KnowledgeArticle_Controller
 {
 
 }
