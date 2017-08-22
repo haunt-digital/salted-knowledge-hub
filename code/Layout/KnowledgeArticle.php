@@ -95,9 +95,14 @@ class KnowledgeArticle extends Page
     {
         $fields->addFieldToTab(
             'Root.Main',
+            class_exists('SaltedUploader') ?
             SaltedUploader::create('PreviewImage', 'Tile\'s thumbnail')
                 ->setCropperRatio(16/9)
-                ->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image')
+                ->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image') :
+            UploadField::create(
+                'PreviewImage',
+                'Tile\'s thumbnail'
+            )->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image')
         );
 
         $fields->addFieldsToTab(
