@@ -15,4 +15,34 @@ class PageJSInjector extends DataExtension
             )
         );
     }
+
+    public function getKnowledgeHubs()
+    {
+        if ($hubs_landing = KnowledgeHubLandingPage::get()->first()) {
+            $url                =   $this->request->getVar('url');
+            $hubs               =   $hubs_landing->AllChildren();
+            $hubs_array         =   array(new ArrayData(array(
+                                        'Title'     =>  'All',
+                                        'Link'      =>  $hubs_landing->Link(),
+                                        'isActive'  =>  $hubs_landing->Link() == $url
+                                    )));
+
+
+            foreach ($hubs as $hub) {
+                $Link           =   $hub->Link();
+                $data           =   array(
+                                        'Title'     =>  $hub->Title,
+                                        'Link'      =>  $Link,
+                                        'isActive'  =>  $Link == $url
+                                    );
+
+
+                $hubs_array[]   =   new ArrayData($data);
+            }
+
+            return new ArrayList($hubs_array);
+        }
+
+        return null;
+    }
 }
