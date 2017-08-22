@@ -48,6 +48,7 @@ Requirements::combine_files(
     $combined_file,
     array(
         ...
+        'themes/default/js/components/salted-js/dist/salted-js.min.js',
         'themes/default/js/components/fancySelect/fancySelect.js',
         'themes/default/js/components/isotope/dist/isotope.pkgd.min.js',
         'themes/default/js/components/isotope-packery/packery-mode.pkgd.min.js',
