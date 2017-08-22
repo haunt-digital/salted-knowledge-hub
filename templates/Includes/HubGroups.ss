@@ -1,7 +1,7 @@
 <nav class="knowledge-hub-groups">
     <div class="container is-flex<% if $BodyClass.LowerCase != 'knowledge-hub-group-page' && $BodyClass.LowerCase != 'knowledge-hub-landing-page' %> maintain-flex-on-mobile<% end_if %>">
         <div class="grid_9 is-flex hub-groups">
-        <% if $BodyClass.LowerCase != 'knowledge-hub-group-page' && $BodyClass.LowerCase != 'knowledge-hub-landing-page' %>
+        <% if $ClassName != 'KnowledgeHubLandingPage' && $ClassName != 'KnowledgeHubGroupPage' %>
             <a class="grid grid_auto" href="$Parent.Link">&lt; To all $MyGroupPlural</a>
         <% else %>
         <% loop $KnowledgeHubs %>

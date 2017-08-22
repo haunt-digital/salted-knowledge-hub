@@ -4,7 +4,7 @@ After: 'framework/*','cms/*'
 ---
 ContentController:
   extensions:
-    - 'PageJSInjector'
+    - 'KnowledgeInjector'
 
 DataList:
   extensions:

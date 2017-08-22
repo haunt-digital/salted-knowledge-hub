@@ -2,7 +2,7 @@
 
 use SaltedHerring\Debugger;
 
-class PageJSInjector extends DataExtension
+class KnowledgeInjector extends DataExtension
 {
     public function KnowledgeHubJSinit($combined_file_name)
     {
@@ -19,7 +19,7 @@ class PageJSInjector extends DataExtension
     public function getKnowledgeHubs()
     {
         if ($hubs_landing = KnowledgeHubLandingPage::get()->first()) {
-            $url                =   $this->request->getVar('url');
+            $url                =   $this->owner->request->getVar('url');
             $hubs               =   $hubs_landing->AllChildren();
             $hubs_array         =   array(new ArrayData(array(
                                         'Title'     =>  'All',
