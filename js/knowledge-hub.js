@@ -1,4 +1,7 @@
-window.knowledge_base_class = 'page-type-knowledge-hub-landing-page';
+if ((typeof window.knowledge_base_class) == "undefined") {
+    window.knowledge_base_class = 'page-type-knowledge-hub-landing-page';
+}
+
 (function($) {
     $(document).ready(function(e)
     {
