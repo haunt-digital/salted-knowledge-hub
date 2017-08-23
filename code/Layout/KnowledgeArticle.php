@@ -163,13 +163,13 @@ class KnowledgeArticle extends Page
             }
 
             if (!empty($this->PreviewImageID)) {
-                $thumbnail = $this->PreviewImage()->Cropped();
+                $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : $this->PreviewImage();
                 $data['Thumbnail']  =   array(
                     'Large'         =>  $thumbnail->FillMax(460, 245)->URL,
                     'Small'         =>  $thumbnail->FillMax(220, 135)->URL
                 );
             } elseif (!empty($this->PageHeroID)) {
-                $thumbnail = $this->PageHero()->Cropped();
+                $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : $this->PageHero();
                 $data['Thumbnail']  =   array(
                     'Large'         =>  $thumbnail->FillMax(460, 245)->URL,
                     'Small'         =>  $thumbnail->FillMax(220, 135)->URL
@@ -230,13 +230,13 @@ class KnowledgeArticle extends Page
     public function getThumbnail()
     {
         if (!empty($this->PreviewImageID)) {
-            $thumbnail = $this->PreviewImage()->Cropped();
+            $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : $this->PreviewImage();
             return  array(
                         'Large' =>  $thumbnail->FillMax(460, 245)->URL,
                         'Small' =>  $thumbnail->FillMax(220, 135)->URL
                     );
         } elseif (!empty($this->PageHeroID)) {
-            $thumbnail = $this->PageHero()->Cropped();
+            $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : $this->PageHero();
             return  array(
                         'Large' =>  $thumbnail->FillMax(460, 245)->URL,
                         'Small' =>  $thumbnail->FillMax(220, 135)->URL
