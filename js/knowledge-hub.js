@@ -72,7 +72,26 @@
         });
 
         if ($('#search-knowledge-hub').length == 1) {
-            
+
+            $('#search-knowledge-hub input.text').blur(function(e)
+            {
+                var pressingButton = $('#search-knowledge-hub button:active').length;
+
+                if (!pressingButton) {
+                    $(this).removeClass('focused');
+                    $(this).val('');
+                }
+            }).keydown(function(e)
+            {
+                if (e.keyCode == 27) {
+                    if ($.trim($(this).val()).length > 0) {
+                        $(this).val('');
+                    } else {
+                        $(this).blur();
+                    }
+                }
+            });
+
             $('#search-knowledge-hub').ajaxSubmit(
             {
                 validator:  function()
