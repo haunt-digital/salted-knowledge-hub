@@ -1,10 +1,7 @@
+window.knowledge_base_class = 'page-type-knowledge-hub-landing-page';
 (function($) {
     $(document).ready(function(e)
     {
-        if ((typeof knowledge_base_class) == "undefined") {
-            var knowledge_base_class = 'page-type-knowledge-hub-landing-page';
-        }
-        
         $('select.use-fancy').fancySelect().on('change.fs', function()
         {
             $(this).trigger('change.$');
