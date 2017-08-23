@@ -1,6 +1,10 @@
 (function($) {
     $(document).ready(function(e)
     {
+        if ((typeof knowledge_base_class) == "undefined") {
+            var knowledge_base_class = 'page-type-knowledge-hub-landing-page';
+        }
+        
         $('select.use-fancy').fancySelect().on('change.fs', function()
         {
             $(this).trigger('change.$');
@@ -106,7 +110,7 @@
                                     return false;
                                 } else {
                                     // if (!$('body').hasClass('page-type-knowledge-hub-landing-page') && !$('body').hasClass('page-type-knowledge-hub-group-page')) {
-                                    if (!$('body').hasClass('page-type-knowledge-hub-landing-page')) {
+                                    if (!$('body').hasClass(knowledge_base_class)) {
                                         location.href = '/knowledge-hub?keywords=' + $('#search-knowledge-hub input.text').val();
                                         return false;
                                     }
