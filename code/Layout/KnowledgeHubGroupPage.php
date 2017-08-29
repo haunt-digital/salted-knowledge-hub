@@ -194,6 +194,12 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
                                     )));
 
             SaltedCache::save($factory, $key, $data);
+        } else {
+            foreach ($data as $item)
+            {
+                $item->isActive = $item->Title == $category;
+
+            }
         }
 
         return new ArrayList($data);
