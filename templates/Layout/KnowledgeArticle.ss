@@ -1,6 +1,6 @@
 <%-- <% include KnowledgeHubPageHeader %> --%>
 <% include HubGroups %>
-<%-- <% include KnowledgeArticleHero %> --%>
+<% include KnowledgeArticleHero %>
 <section class="section knowledge-article">
     <div class="container">
         <article class="knowledge-article__content grid_9">

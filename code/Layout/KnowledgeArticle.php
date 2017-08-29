@@ -40,6 +40,15 @@ class KnowledgeArticle extends Page
         'Excerpt'           =>  'Text'
     );
 
+    /**
+     * Defines extension names and parameters to be applied
+     * to this object upon construction.
+     * @var array
+     */
+    private static $extensions = array(
+        'KnowledgeHeroExtension'
+    );
+
     private static $default_sort = array(
         'PublishDate'       =>  'DESC',
         'Created'           =>  'DESC'
