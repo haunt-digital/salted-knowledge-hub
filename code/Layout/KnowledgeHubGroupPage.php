@@ -154,7 +154,7 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
         $result                             =   $sqlQuery->execute();
 
         foreach ($result as $row) {
-            $key = 'KnowledgeCategory_' . strtotime($row['max']) . '_' . Utilities::sanitise($this->Title);
+            $key = 'KnowledgeCategory_' . strtotime($row['max']) . '_' . Utilities::sanitise($this->Title, '_');
             break;
         }
 
