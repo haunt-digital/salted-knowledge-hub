@@ -83,6 +83,7 @@ if ((typeof window.knowledge_base_class) == "undefined") {
 
                 if (!pressingButton) {
                     $(this).removeClass('focused');
+                    $('.search-holder').removeClass('focused');
                     $(this).val('');
                 }
             }).keydown(function(e)
@@ -101,7 +102,7 @@ if ((typeof window.knowledge_base_class) == "undefined") {
                 validator:  function()
                             {
                                 if ($.trim($('#search-knowledge-hub input.text').val()).length == 0) {
-                                    $('#search-knowledge-hub input.text').addClass('focused');
+                                    $('#search-knowledge-hub input.text, .search-holder').addClass('focused');
                                     setTimeout(function()
                                     {
                                         $('#search-knowledge-hub input.text').focus();
