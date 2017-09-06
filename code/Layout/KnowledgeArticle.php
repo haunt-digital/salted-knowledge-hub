@@ -60,6 +60,7 @@ class KnowledgeArticle extends Page
     private static $has_one = array(
         'Author'            =>  'Author',
         'PreviewImage'      =>  'Image',
+        'CrpdPrevImg'       =>  'Image',
         'Category'          =>  'KnowledgeCategory'
     );
 
@@ -113,17 +114,43 @@ class KnowledgeArticle extends Page
             )->setDescription('Leave blank to use default label: ' . $this->singular_name())
         );
 
-        $fields->addFieldToTab(
-            'Root.Main',
-            class_exists('SaltedUploader') ?
-            SaltedUploader::create('PreviewImage', 'Tile\'s thumbnail')
-                ->setCropperRatio(16/9)
-                ->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image') :
-            UploadField::create(
-                'PreviewImage',
-                'Tile\'s thumbnail'
-            )->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image')
-        );
+        if (class_exists('SaltedUploader')) {
+            $fields->addFieldToTab(
+                'Root.Main',
+                SaltedUploader::create('PreviewImage', 'Tile\'s thumbnail')
+                    ->setCropperRatio(460/245)
+                    ->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image')
+            );
+        } elseif (class_exists('CropperField\CropperField')) {
+            $im                 =   new UploadField('PreviewImage', 'Preview image');
+            $fields->addFieldsToTab(
+                'Root.Main',
+                [
+                    $im,
+                    CropperField\CropperField::create(
+                        'CrpdPrevImg',
+                        'Cropping preview image',
+                        new CropperField\Adapter\UploadField(
+                            $im
+                        ),
+                        array(
+                            'aspect_ratio' 			=> 460/245,
+                            'generated_max_width' 	=> 460
+                        )
+                    )->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image')
+                ]
+            );
+        } else {
+            $fields->addFieldToTab(
+                'Root.Main',
+                UploadField::create(
+                    'PreviewImage',
+                    'Tile\'s thumbnail'
+                )->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image')
+            );
+        }
+
+
 
         $fields->addFieldsToTab(
             'Root.Main',
@@ -182,24 +209,24 @@ class KnowledgeArticle extends Page
                 $data['Author']     =   $author->Title();
             }
 
-            if (!empty($this->PreviewImageID)) {
-                $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : $this->PreviewImage();
-                $data['Thumbnail']  =   array(
-                    'Large'         =>  $thumbnail->FillMax(460, 245)->URL,
-                    'Small'         =>  $thumbnail->FillMax(220, 135)->URL
-                );
-            } elseif (!empty($this->PageHeroID)) {
-                $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : $this->PageHero();
-                $data['Thumbnail']  =   array(
-                    'Large'         =>  $thumbnail->FillMax(460, 245)->URL,
-                    'Small'         =>  $thumbnail->FillMax(220, 135)->URL
-                );
-            } else {
-                $data['Thumbnail']  =   array(
-                    'Large'         =>  'https://via.placeholder.com/460x245',
-                    'Small'         =>  'https://via.placeholder.com/220x135'
-                );
-            }
+            // if (!empty($this->PreviewImageID)) {
+            //     $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : $this->PreviewImage();
+            //     $data['Thumbnail']  =   array(
+            //         'Large'         =>  $thumbnail->FillMax(460, 245)->URL,
+            //         'Small'         =>  $thumbnail->FillMax(220, 135)->URL
+            //     );
+            // } elseif (!empty($this->PageHeroID)) {
+            //     $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : $this->PageHero();
+            //     $data['Thumbnail']  =   array(
+            //         'Large'         =>  $thumbnail->FillMax(460, 245)->URL,
+            //         'Small'         =>  $thumbnail->FillMax(220, 135)->URL
+            //     );
+            // } else {
+            //     $data['Thumbnail']  =   array(
+            //         'Large'         =>  'https://via.placeholder.com/460x245',
+            //         'Small'         =>  'https://via.placeholder.com/220x135'
+            //     );
+            // }
 
             SaltedCache::save($factory, $key, $data);
         }
@@ -249,14 +276,15 @@ class KnowledgeArticle extends Page
 
     public function getThumbnail()
     {
+        // Debugger::inspect($this->PreviewImage());
         if (!empty($this->PreviewImageID)) {
-            $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : $this->PreviewImage();
+            $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : (!empty($this->CrpdPrevImgID) ? $this->CrpdPrevImg() : $this->PreviewImage());
             return  array(
                         'Large' =>  $thumbnail->FillMax(460, 245)->URL,
                         'Small' =>  $thumbnail->FillMax(220, 135)->URL
                     );
         } elseif (!empty($this->PageHeroID)) {
-            $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : $this->PageHero();
+            $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : (!empty($this->PageHeroCroppedID) ? $this->PageHeroCropped() : $this->PageHero());
             return  array(
                         'Large' =>  $thumbnail->FillMax(460, 245)->URL,
                         'Small' =>  $thumbnail->FillMax(220, 135)->URL
