@@ -2,6 +2,9 @@
 
 class ResourceKnowledgeArticle extends KnowledgeArticle
 {
+    private static $singular_name   =   'Resource';
+    private static $plural_name     =   'Resources';
+
     private static $has_one = array(
         'AttachedFile'      =>  'File'
     );

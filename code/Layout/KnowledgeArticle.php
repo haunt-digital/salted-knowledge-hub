@@ -5,8 +5,10 @@ use SaltedHerring\Grid;
 use SaltedHerring\Utilities;
 class KnowledgeArticle extends Page
 {
-    protected $AddThis      =   true;
-    protected $isArticle    =   true;
+    protected $AddThis              =   true;
+    protected $isArticle            =   true;
+    private static $singular_name   =   'Knowledge article';
+    private static $plural_name     =   'Knowledge articles';
 
     private static $show_in_sitetree = false;
     private static $allowed_children = array();
@@ -37,6 +39,7 @@ class KnowledgeArticle extends Page
         'PublishDate'       =>  'Date',
         'ExpiryDate'        =>  'SS_Datetime',
         'RemoveWhenExpire'  =>  'Boolean',
+        'TileLabel'         =>  'Varchar(128)',
         'Excerpt'           =>  'Text'
     );
 
@@ -104,6 +107,14 @@ class KnowledgeArticle extends Page
     {
         $fields->addFieldToTab(
             'Root.Main',
+            TextField::create(
+                'TileLabel',
+                'Tile label'
+            )->setDescription('Leave blank to use default label: ' . $this->singular_name())
+        );
+
+        $fields->addFieldToTab(
+            'Root.Main',
             class_exists('SaltedUploader') ?
             SaltedUploader::create('PreviewImage', 'Tile\'s thumbnail')
                 ->setCropperRatio(16/9)
@@ -161,7 +172,7 @@ class KnowledgeArticle extends Page
                 'Link'              =>  $this->Link(),
                 'PublishedDate'     =>  $date_field->Format('d F Y'),
                 'Excerpt'           =>  $this->Excerpt,
-                'HubGroup'          =>  $this->Parent()->Title,
+                'HubGroup'          =>  !empty($this->TileLabel) ? $this->TileLabel : $this->singular_name(),
                 'HubClass'          =>  Utilities::sanitise($this->Parent()->Title),  // maybe we should replace this with the model's classname?
                 'Thumbnail'         =>  $this->getThumbnail()
             );
@@ -267,18 +278,8 @@ class KnowledgeArticle_Controller extends Page_Controller
         return $this->Parent()->getHeaderContent();
     }
 
-    public function getMyGroup($i = 1)
+    public function getMyGroup()
     {
-        return $this->Parent()->getGroupName($i);
-    }
-
-    public function getMyGroupSingular()
-    {
-        return $this->Parent()->getSingular();
-    }
-
-    public function getMyGroupPlural()
-    {
-        return $this->Parent()->getPlural();
+        return $this->Parent()->Title;
     }
 }

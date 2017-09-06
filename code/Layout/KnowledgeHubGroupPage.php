@@ -32,6 +32,11 @@ class KnowledgeHubGroupPage extends Page
         $fields         =   parent::getCMSFields();
         $article_types  =   ClassInfo::subclassesFor('KnowledgeArticle');
         unset($article_types['KnowledgeArticle']);
+        foreach ($article_types as &$article_type)
+        {
+            $article_type = $article_type::create()->plural_name();
+        }
+
         $fields->addFieldToTab(
             'Options',
             CheckboxsetField::create(
@@ -74,35 +79,6 @@ class KnowledgeHubGroupPage extends Page
     public function getHeaderContent()
     {
         return $this->Parent()->getHeaderContent();
-    }
-
-    private function getCloak()
-    {
-        $cloak      =    Config::inst()->get('Cloaking', strtolower($this->Title));
-
-        return !empty($cloak) ? $cloak : $this->Title;
-    }
-
-    public function getSingular()
-    {
-        $cloaking   =   $this->getCloak();
-
-        if (is_array($cloaking)) {
-            return $cloaking['Singular'];
-        }
-
-        return $cloaking;
-    }
-
-    public function getPlural()
-    {
-        $cloaking   =   $this->getCloak();
-
-        if (is_array($cloaking)) {
-            return $cloaking['Plural'];
-        }
-
-        return $cloaking . 's';
     }
 }
 
