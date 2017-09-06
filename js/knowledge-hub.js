@@ -5,6 +5,15 @@ if ((typeof window.knowledge_base_class) == "undefined") {
 (function($) {
     $(document).ready(function(e)
     {
+        var tapAndLeave     =   function(e)
+        {
+            if (!$(e.target).is('input[name="keywords"]')) {
+                $('#search-knowledge-hub input.text').blur();
+            }
+
+            $(window).unbind('touchstart', tapAndLeave);
+        };
+
         $('select.use-fancy').fancySelect().on('change.fs', function()
         {
             $(this).trigger('change.$');
@@ -100,72 +109,75 @@ if ((typeof window.knowledge_base_class) == "undefined") {
             $('#search-knowledge-hub').ajaxSubmit(
             {
                 validator:  function()
+                {
+                    if ($.trim($('#search-knowledge-hub input.text').val()).length == 0) {
+                        $('#search-knowledge-hub input.text, .search-holder').addClass('focused');
+                        $(window).on('touchstart', tapAndLeave);
+                        if (!isMobile) {
+                            setTimeout(function()
                             {
-                                if ($.trim($('#search-knowledge-hub input.text').val()).length == 0) {
-                                    $('#search-knowledge-hub input.text, .search-holder').addClass('focused');
-                                    setTimeout(function()
-                                    {
-                                        $('#search-knowledge-hub input.text').focus();
-                                    }, 100);
+                                $('#search-knowledge-hub input.text').focus();
+                            }, 100);
+                        }
 
-                                    return false;
-                                } else {
-                                    // if (!$('body').hasClass('page-type-knowledge-hub-landing-page') && !$('body').hasClass('page-type-knowledge-hub-group-page')) {
-                                    if (!$('body').hasClass(knowledge_base_class)) {
-                                        location.href = '/knowledge-hub?keywords=' + $('#search-knowledge-hub input.text').val();
-                                        return false;
-                                    }
-                                }
-                                return true;
-                            },
+                        return false;
+                    } else {
+                        // if (!$('body').hasClass('page-type-knowledge-hub-landing-page') && !$('body').hasClass('page-type-knowledge-hub-group-page')) {
+                        if (!$('body').hasClass(knowledge_base_class)) {
+                            location.href = '/knowledge-hub?keywords=' + $('#search-knowledge-hub input.text').val();
+                            return false;
+                        }
+                    }
+                    return true;
+                },
 
                 onstart:    function()
-                            {
-                                $('.hub-groups .is-active, .hub-subcategories .is-active').removeClass('is-active');
+                {
+                    $('.hub-groups .is-active, .hub-subcategories .is-active').removeClass('is-active');
 
-                                $('#search-knowledge-hub input.text').blur().val('');
-                                $('.ajax-list.filled').removeClass('filled');
-                                $('.ajax-nav').addClass('hide');
-                                $('.knowledge-hub__count .count').html('');
-                                window.isotope.html('');
-                            },
+                    $('#search-knowledge-hub input.text').blur().val('');
+                    $('.ajax-list.filled').removeClass('filled');
+                    $('.ajax-nav').addClass('hide');
+                    $('.knowledge-hub__count .count').html('');
+                    window.isotope.html('');
+                },
 
                 success:    function(response)
-                            {
-                                window.isotope.addClass('filled');
-                                var template    =   Handlebars.compile(knowledgeTiles),
-                                    tiles       =   template(response),
-                                    count       =   0;
-                                    unit        =   null;
+                {
+                    window.isotope.addClass('filled');
+                    var template    =   Handlebars.compile(knowledgeTiles),
+                        tiles       =   template(response),
+                        count       =   0;
+                        unit        =   null;
 
-                                tiles           =   $($.trim(tiles));
-                                count           =   response.count;
+                    tiles           =   $($.trim(tiles));
+                    count           =   response.count;
 
-                                $('.knowledge-hub__count .count').html(count);
-                                $('.knowledge-hub__count .unit').html('Item' + (count > 1 ? 's' : ''));
+                    $('.knowledge-hub__count .count').html(count);
+                    $('.knowledge-hub__count .unit').html('Item' + (count > 1 ? 's' : ''));
 
-                                window.isotope.append(tiles)
-                                      .isotope( 'appended', tiles )
-                                      .imagesLoaded().progress( function()
-                                      {
-                                          window.isotope.isotope('layout');
-                                          var by = $('#knowledge-list-sorter option:selected').val();
-                                          window.isotope.isotope({ sortBy: by, sortAscending: by == 'date' ? false : true });
-                                      });
+                    window.isotope.append(tiles)
+                          .isotope( 'appended', tiles )
+                          .imagesLoaded().progress( function()
+                          {
+                              window.isotope.isotope('layout');
+                              var by = $('#knowledge-list-sorter option:selected').val();
+                              window.isotope.isotope({ sortBy: by, sortAscending: by == 'date' ? false : true });
+                          });
 
-                                if (response.pagination.href) {
-                                    $('.ajax-nav .button').attr('href', response.pagination.href);
-                                    $('.ajax-nav .button').removeClass('hide');
-                                    $('.ajax-nav').find('.nav-message').addClass('hide');
-                                } else {
-                                    $('.ajax-nav .button').addClass('hide').attr('href', '');
-                                    $('.ajax-nav').find('.nav-message').removeClass('hide');
-                                    $('.ajax-nav').find('.nav-message').html(response.pagination.message);
-                                }
+                    if (response.pagination.href) {
+                        $('.ajax-nav .button').attr('href', response.pagination.href);
+                        $('.ajax-nav .button').removeClass('hide');
+                        $('.ajax-nav').find('.nav-message').addClass('hide');
+                    } else {
+                        $('.ajax-nav .button').addClass('hide').attr('href', '');
+                        $('.ajax-nav').find('.nav-message').removeClass('hide');
+                        $('.ajax-nav').find('.nav-message').html(response.pagination.message);
+                    }
 
-                                $('.ajax-nav').removeClass('hide');
+                    $('.ajax-nav').removeClass('hide');
 
-                            }
+                }
             });
         }
     });
