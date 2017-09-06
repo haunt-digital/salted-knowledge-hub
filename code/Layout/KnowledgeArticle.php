@@ -193,14 +193,15 @@ class KnowledgeArticle extends Page
         if (empty($data)) {
             $date_field             =   new Date();
             $date_field->setValue($this->PublishDate);
+            $group_name             =   !empty($this->TileLabel) ? $this->TileLabel : $this->singular_name();
             $data = array(
                 'ID'                =>  $this->ID,
                 'Title'             =>  $this->Title,
                 'Link'              =>  $this->Link(),
                 'PublishedDate'     =>  $date_field->Format('d F Y'),
                 'Excerpt'           =>  $this->Excerpt,
-                'HubGroup'          =>  !empty($this->TileLabel) ? $this->TileLabel : $this->singular_name(),
-                'HubClass'          =>  Utilities::sanitise($this->Parent()->Title),  // maybe we should replace this with the model's classname?
+                'HubGroup'          =>  $group_name,
+                'HubClass'          =>  Utilities::sanitise($group_name),  // maybe we should replace this with the model's classname?
                 'Thumbnail'         =>  $this->getThumbnail()
             );
 
