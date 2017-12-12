@@ -14,10 +14,12 @@ if ((typeof window.knowledge_base_class) == "undefined") {
             $(window).unbind('touchstart', tapAndLeave);
         };
 
-        $('select.use-fancy').fancySelect().on('change.fs', function()
-        {
-            $(this).trigger('change.$');
-        });
+        if ($.isFunction($.fancySelect)) {
+            $('select.use-fancy').fancySelect().on('change.fs', function()
+            {
+                $(this).trigger('change.$');
+            });
+        }
 
         $('.knowledge-hub.ajax-content').afetch(function(data, listTo, navTo)
         {
