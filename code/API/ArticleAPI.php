@@ -7,14 +7,15 @@ use SaltedHerring\SaltedSearch;
  *
  * Controller to present the data from forms.
  * */
-class ArticleAPI extends BaseRestController {
-
-    private $pageSize   =   20;
-    private $keywords   =   null;
+class ArticleAPI extends BaseRestController
+{
+    private static $https_only  =   false;
+    private $pageSize           =   20;
+    private $keywords           =   null;
 
     private static $allowed_actions = array (
-        'get'			=>	"->isAuthenticated",
-        'post'			=>	"->isAuthenticated"
+        'get'                   =>  "->isAuthenticated",
+        'post'                  =>  "->isAuthenticated"
     );
 
     public function isAuthenticated()
