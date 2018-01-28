@@ -17,6 +17,7 @@
         "silverstripe/lumberjack": "~1.1",
         "salted-herring/salted-library": "dev-master",
         "ntb/silverstripe-rest-api": "~1.0",
-        "micschk/silverstripe-rightsidebar": "~1.2"
+        "micschk/silverstripe-rightsidebar": "~1.2",
+        "salted-herring/salted-cropper": "~2.0.0"
     }
 }

@@ -114,10 +114,10 @@ class KnowledgeArticle extends Page
             )->setDescription('Leave blank to use default label: ' . $this->singular_name())
         );
 
-        if (class_exists('SaltedUploader')) {
+        if (class_exists('CroppableImageField')) {
             $fields->addFieldToTab(
                 'Root.Main',
-                SaltedUploader::create('PreviewImage', 'Tile\'s thumbnail')
+                CroppableImageField::create('PreviewImageID', 'Tile\'s thumbnail')
                     ->setCropperRatio(460/245)
                     ->setDescription('Choose a different image for when displayed in tile, or leave it empty to use the page hero image')
             );

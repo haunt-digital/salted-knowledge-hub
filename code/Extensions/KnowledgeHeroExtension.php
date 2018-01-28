@@ -9,10 +9,10 @@ class KnowledgeHeroExtension extends DataExtension
 
     public function updateCMSFields(FieldList $fields)
     {
-        if (class_exists('SaltedUploader')) {
+        if (class_exists('CroppableImageField')) {
             $fields->addFieldToTab(
                 'Root.Main',
-                SaltedUploader::create('PageHero', 'Page hero image')->setCropperRatio(16/9)
+                CroppableImageField::create('PageHeroID', 'Page hero image')->setCropperRatio(16/9)
             );
         } else {
             $im                 =   new UploadField('PageHero', 'Page hero');
