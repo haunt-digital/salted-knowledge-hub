@@ -38,7 +38,7 @@ class KnowledgeHeroExtension extends DataExtension
 
     public function getHeroImage()
     {
-        if (!class_exists('SaltedUploader')) {
+        if (!class_exists('CroppableImageField')) {
             return $this->owner->PageHeroCropped();
         }
 
