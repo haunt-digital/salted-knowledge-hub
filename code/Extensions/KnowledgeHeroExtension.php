@@ -41,7 +41,11 @@ class KnowledgeHeroExtension extends DataExtension
         if (!class_exists('CroppableImageField')) {
             return $this->owner->PageHeroCropped();
         }
+        
+        if (method_exists($this->owner->PageHero(), 'Cropped')) {
+            return $this->owner->PageHero()->Cropped()
+        }
 
-        return $this->owner->PageHero()->Cropped();
+        return $this->owner->PageHero();
     }
 }
