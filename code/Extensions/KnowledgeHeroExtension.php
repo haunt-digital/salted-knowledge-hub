@@ -43,7 +43,7 @@ class KnowledgeHeroExtension extends DataExtension
         }
         
         if (method_exists($this->owner->PageHero(), 'Cropped')) {
-            return $this->owner->PageHero()->Cropped()
+            return $this->owner->PageHero()->Cropped();
         }
 
         return $this->owner->PageHero();
