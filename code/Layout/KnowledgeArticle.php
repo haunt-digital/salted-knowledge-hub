@@ -280,19 +280,23 @@ class KnowledgeArticle extends Page
         // Debugger::inspect($this->PreviewImage());
         if (!empty($this->PreviewImageID)) {
             $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : (!empty($this->CrpdPrevImgID) ? $this->CrpdPrevImg() : $this->PreviewImage());
-            return  array(
-                        'Large' =>  $thumbnail->FillMax(460, 245)->URL,
-                        'Small' =>  $thumbnail->FillMax(220, 135)->URL
-                    );
         } elseif (!empty($this->PageHeroID)) {
             $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : (!empty($this->PageHeroCroppedID) ? $this->PageHeroCropped() : $this->PageHero());
-            return  array(
-                        'Large' =>  $thumbnail->FillMax(460, 245)->URL,
-                        'Small' =>  $thumbnail->FillMax(220, 135)->URL
-                    );
         }
 
-        return      array(
+        if (!is_null($thumbnail)) {
+            $large = $thumbnail->FillMax(460, 245);
+            $small = $thumbnail->FillMax(220, 135);
+
+            if ($large && $small) {
+                return  array(
+                            'Large' =>  $large->URL,
+                            'Small' =>  $small->URL
+                        );
+            }
+        }
+
+        return array(
                         'Large' =>  'https://via.placeholder.com/460x245',
                         'Small' =>  'https://via.placeholder.com/220x135'
                     );
