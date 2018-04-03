@@ -59,8 +59,8 @@ class KnowledgeArticle extends Page
 
     private static $has_one = array(
         'Author'            =>  'Author',
-        'PreviewImage'      =>  'Image',
-        'CrpdPrevImg'       =>  'Image',
+        'PreviewImage'      =>  'SaltedCroppableImage',
+        'CrpdPrevImg'       =>  'SaltedCroppableImage',
         'Category'          =>  'KnowledgeCategory'
     );
 
