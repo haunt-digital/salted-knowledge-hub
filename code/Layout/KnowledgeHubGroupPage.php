@@ -121,16 +121,13 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
         $category                           =   $this->request->getVar('category');
 
         $factory                            =   'KnowledgeCategoryList';
-
-        $sqlQuery                           =   new SQLSelect();
-
-        $sqlQuery->setFrom('KnowledgeCategory');
-        $sqlQuery->addSelect('MAX("LastEdited") as max');
-
-        $result                             =   $sqlQuery->execute();
+        
+        $query = new SQLQuery();
+        $max = $query->setFrom('KnowledgeCategory')->aggregate('MAX("LastEdited")');
+        $result = $query->execute();
 
         foreach ($result as $row) {
-            $key = 'KnowledgeCategory_' . strtotime($row['max']) . '_' . Utilities::sanitise($this->Title, '_');
+            $key = 'KnowledgeCategory_' . strtotime($row['LastEdited']) . '_' . Utilities::sanitise($this->Title, '_');
             break;
         }
 
