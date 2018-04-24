@@ -121,7 +121,7 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
         $category                           =   $this->request->getVar('category');
 
         $factory                            =   'KnowledgeCategoryList';
-        
+
         $query = new SQLQuery();
         $max = $query->setFrom('KnowledgeCategory')->aggregate('MAX("LastEdited")');
         $result = $query->execute();
@@ -130,6 +130,8 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
             $key = 'KnowledgeCategory_' . strtotime($row['LastEdited']) . '_' . Utilities::sanitise($this->Title, '_');
             break;
         }
+
+        $key                                =   empty($key) ? '0' : $key;
 
         $data = SaltedCache::read($factory, $key);
 
