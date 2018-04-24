@@ -2,8 +2,8 @@
 
 class GenericKnowledgeArticle extends KnowledgeArticle
 {
-    private static $singular_name   =   'Knowledge article';
-    private static $plural_name     =   'Knowledge articles';
+    private static $singular_name   =   'Generic Knowledge article';
+    private static $plural_name     =   'Generic Knowledge articles';
     private static $hide_ancestor   =   'KnowledgeArticle';
 }
 

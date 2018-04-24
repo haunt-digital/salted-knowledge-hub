@@ -5,7 +5,6 @@ use SaltedHerring\Grid;
 use SaltedHerring\Utilities;
 class KnowledgeArticle extends Page
 {
-    protected $AddThis              =   true;
     protected $isArticle            =   true;
     private static $singular_name   =   'Knowledge article';
     private static $plural_name     =   'Knowledge articles';
@@ -284,7 +283,7 @@ class KnowledgeArticle extends Page
             $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : (!empty($this->PageHeroCroppedID) ? $this->PageHeroCropped() : $this->PageHero());
         }
 
-        if (!is_null($thumbnail)) {
+        if (!empty($thumbnail)) {
             $large = $thumbnail->FillMax(460, 245);
             $small = $thumbnail->FillMax(220, 135);
 
@@ -314,5 +313,14 @@ class KnowledgeArticle_Controller extends Page_Controller
     public function getMyGroup()
     {
         return $this->Parent()->Title;
+    }
+
+    public function AddThis()
+    {
+        if ($pub_id = Config::inst()->get('AddThis', 'PUBID')) {
+            return '//s7.addthis.com/js/300/addthis_widget.js#pubid=' . $pub_id;
+        }
+
+        return false;
     }
 }

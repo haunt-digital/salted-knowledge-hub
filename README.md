@@ -4,6 +4,25 @@ Salted Herring's Knowledge Hub module
 ## Manual
 ### Installation
 
+*Step 0*
+If you don't want to use AddThis sharing buttons, you may skip this. Otherwise. follow.
+
+Go to https://www.addthis.com/, get your sharing code ready. All you need is the pubid that you are given:
+e.g.:
+```
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-123456sb7984a61d"></script>
+```
+What you need is `ra-123456sb7984a61d`
+
+Now go to `config.yml`, place this like
+
+```
+AddThis:
+  PUBID: 'ra-123456sb7984a61d'
+```
+
+Do your flush, and move one to the next step
+
 *Step 1*
 Because this module isn’t public, you will need to make changes in composer.json to be able to access to it:
 

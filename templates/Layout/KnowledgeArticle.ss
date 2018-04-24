@@ -6,9 +6,12 @@
         <article class="knowledge-article__content grid_9">
             <div class="columns align-vertical-center is-marginless-vertical">
                 <div class="column is-paddingless-vertical knowledge-article__content__group-name"><% if $BodyClass == 'video' || $BodyClass == 'case-study' %>$singular_name<% else %>$cached.PublishedDate<% end_if %></div>
+                <% if $AddThis %>
                 <div class="column is-narrow is-paddingless-vertical">
                     <div class="addthis_inline_share_toolbox"></div>
                 </div>
+                <script type="text/javascript" src="$AddThis"></script>
+                <% end_if %>
             </div>
             <h1 class="knowledge-article__content__title title">$Title</h1>
             <% if $Author %>
