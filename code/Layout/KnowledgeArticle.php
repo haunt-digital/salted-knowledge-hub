@@ -284,7 +284,7 @@ class KnowledgeArticle extends Page
             $thumbnail = method_exists($this->PageHero(), 'Cropped') ? $this->PageHero()->Cropped() : (!empty($this->PageHeroCroppedID) ? $this->PageHeroCropped() : $this->PageHero());
         }
 
-        if (!is_null($thumbnail)) {
+        if (!empty($thumbnail)) {
             $large = $thumbnail->FillMax(460, 245);
             $small = $thumbnail->FillMax(220, 135);
 
