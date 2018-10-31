@@ -277,6 +277,8 @@ class KnowledgeArticle extends Page
 
     public function getThumbnail()
     {
+        $thumbnail = null;
+        
         // Debugger::inspect($this->PreviewImage());
         if (!empty($this->PreviewImageID)) {
             $thumbnail = method_exists($this->PreviewImage(), 'Cropped') ? $this->PreviewImage()->Cropped() : (!empty($this->CrpdPrevImgID) ? $this->CrpdPrevImg() : $this->PreviewImage());
