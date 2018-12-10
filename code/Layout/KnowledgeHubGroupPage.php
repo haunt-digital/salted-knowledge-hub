@@ -97,11 +97,19 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
         $vars = [];
         $var_string = '';
         if ($category = $this->request->getVar('category')) {
-            $vars['category'] = $category;
+            if (strpos($category, '"') !== false) {
+                throw new SS_HTTPResponse_Exception(ErrorPage::response_for(404), 404);
+            }
+
+            $vars['category'] = htmlspecialchars($category, ENT_QUOTES);
         }
 
         if ($keywords = $this->request->getVar('keywords')) {
-            $vars['keywords'] = $keywords;
+            if (strpos($keywords, '"') !== false) {
+                throw new SS_HTTPResponse_Exception(ErrorPage::response_for(404), 404);
+            }
+
+            $vars['keywords'] = htmlspecialchars($keywords, ENT_QUOTES);
         }
 
         if (!empty($vars)) {
