@@ -88,6 +88,28 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
 
     public function index()
     {
+        $category   =   $this->request->getVar('category');
+        $keywords   =   $this->request->getVar('keywords');
+        $start      =   $this->request->getVar('start');
+
+        if (!empty($category)) {
+            if (!preg_match('/^[a-zA-Z\d- _]+$/', $category)) {
+                throw new SS_HTTPResponse_Exception(ErrorPage::response_for(404), 404);
+            }
+        }
+
+        if (!empty($keywords)) {
+            if (!preg_match('/^[a-zA-Z\d- _]+$/', $keywords)) {
+                throw new SS_HTTPResponse_Exception(ErrorPage::response_for(404), 404);
+            }
+        }
+
+        if (!empty($start)) {
+            if (!preg_match('/^[a-zA-Z\d- _]+$/', $start)) {
+                throw new SS_HTTPResponse_Exception(ErrorPage::response_for(404), 404);
+            }
+        }
+
         $this->ItemCount = $this->AllChildren()->count();
         return $this->customise(['GroupID' => $this->ID])->renderWith(['KnowledgeHubLayout', 'Page']);
     }

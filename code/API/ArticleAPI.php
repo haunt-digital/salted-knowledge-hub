@@ -30,16 +30,6 @@ class ArticleAPI extends BaseRestController
                     return false;
                 }
             }
-            // if get, let it pass
-            // else {
-            //     if ($this->keywords = trim($this->request->getVar('keywords'))) {
-            //         if ($crsf = $this->request->getVar('csrf')) {
-            //             return $crsf == Session::get('SecurityID');
-            //         }
-            //
-            //         return false;
-            //     }
-            // }
 
             return true;
         }
@@ -59,6 +49,7 @@ class ArticleAPI extends BaseRestController
     public function get($request)
     {
         if ($this->keywords = trim($this->request->getVar('keywords'))) {
+            $this->keywords =   htmlspecialchars($this->keywords, ENT_QUOTES);
             return $this->Paginate(SaltedSearch::Search('KnowledgeArticle', array('Title', 'Content', 'MetaKeywords'), $this->keywords));
         }
 
@@ -66,8 +57,9 @@ class ArticleAPI extends BaseRestController
             $page           =   KnowledgeHubGroupPage::get()->byID($groupID);
             $this->pageSize =   $page->ItemsPerPage;
             if ($category   =   $this->request->getVar('category')) {
+                $category   =   htmlspecialchars($category, ENT_QUOTES);
                 $category   =   KnowledgeCategory::get()->filter(array('Title' => $category))->first();
-                $articles   =   $category->Articles();
+                $articles   =   $category ? $category->Articles() : null;
             } else {
                 $articles   =   $page->AllChildren();
             }
@@ -84,6 +76,10 @@ class ArticleAPI extends BaseRestController
 
     private function Paginate($articles)
     {
+        if (empty($articles)) {
+            return array('list' => [], 'count' => 0, 'pagination' => array('message' => '- not found -'));
+        }
+
         $artcile_count                  =   $articles->count();
 
         if (empty($artcile_count)) {
@@ -91,6 +87,7 @@ class ArticleAPI extends BaseRestController
         }
 
         $start                          =   $this->request->getVar('start');
+        $start                          =   htmlspecialchars($start, ENT_QUOTES);
 
         if ($artcile_count > $this->pageSize) {
             $paged                      =   new PaginatedList($articles, $this->request);
