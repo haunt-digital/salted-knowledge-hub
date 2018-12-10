@@ -97,7 +97,7 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
         $vars = [];
         $var_string = '';
         if ($category = $this->request->getVar('category')) {
-            if (strpos($category, '"') !== false) {
+            if (strpos($category, '"') !== false || strpos($category, "'") !== false) {
                 throw new SS_HTTPResponse_Exception(ErrorPage::response_for(404), 404);
             }
 
@@ -105,7 +105,7 @@ class KnowledgeHubGroupPage_Controller extends Page_Controller
         }
 
         if ($keywords = $this->request->getVar('keywords')) {
-            if (strpos($keywords, '"') !== false) {
+            if (strpos($keywords, '"') !== false || strpos($keywords, "'") !== false) {
                 throw new SS_HTTPResponse_Exception(ErrorPage::response_for(404), 404);
             }
 
